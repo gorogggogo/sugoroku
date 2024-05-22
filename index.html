@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>双六ゲーム</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #gameBoard {
+        margin: 50px auto;
+        border: 1px solid black;
+        width: 400px;
+        height: 200px;
+        position: relative;
+    }
+    .player {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    #goal {
+        width: 50px;
+        height: 50px;
+        background-color: green;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+</head>
+<body>
+<div id="gameBoard">
+    <div id="player" class="player"></div>
+    <div id="goal"></div>
+</div>
+<button id="rollButton">サイコロを振る</button>
+<script>
+    const rollButton = document.getElementById('rollButton');
+    const player = document.getElementById('player');
+    const goal = document.getElementById('goal');
+    const gameBoard = document.getElementById('gameBoard');
+
+    let playerPosition = 0;
+    const goalPosition = gameBoard.offsetWidth - goal.offsetWidth;
+
+    rollButton.addEventListener('click', rollDice);
+
+    function rollDice() {
+        const diceRoll = Math.ceil(Math.random() * 6);
+        movePlayer(diceRoll);
+    }
+
+    function movePlayer(spaces) {
+        playerPosition += spaces * 20;
+        if (playerPosition >= goalPosition) {
+            playerPosition = goalPosition;
+            alert('ゲームクリア！');
+            rollButton.disabled = true;
+        }
+        player.style.left = playerPosition + 'px';
+    }
+</script>
+</body>
+</html>
